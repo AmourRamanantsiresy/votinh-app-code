@@ -3,6 +3,9 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { axiosBase } from '../utils/axios-config';
 import { useRouter } from 'next/navigation';
+import { VoteProvider } from '@/utils';
+
+const voteProvider = new VoteProvider();
 
 export default function Home() {
   const [key, setKey] = useState('');
@@ -17,17 +20,17 @@ export default function Home() {
     e.preventDefault();
     setLoading(true);
     axiosBase
-      .get('/validate', {
-        params: {
-          key,
-        },
-      })
-      .then(() => {
-        setLoading(false);
-        push('/vote');
+      .get('/otp/whatIAm/' + key)
+      .then(({ data }) => {
+        voteProvider.getOneVote(data.voteId).then(vote => {
+          push(`/vote/${key}/${data.voteId}/${vote.name}`);
+        });
       })
       .catch(() => {
         alert('Diso ny kaody nampidirinao');
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 

@@ -1,6 +1,6 @@
 import axios from 'axios';
-const baseURL = process.env.BASE_URL || '';
+// const baseURL = process.env.BASE_URL || '';
 
 export const axiosBase = axios.create({
-  baseURL,
+  baseURL: 'http://localhost:8080',
 });
