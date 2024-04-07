@@ -60,7 +60,6 @@ function ElectionDetail() {
   const handleRefresh = () => {
     handleRecordVotes();
     alert('Misaotra anao nifidy !');
-    window.location.reload();
   };
 
   const handleRecordVotes = async () => {
@@ -82,7 +81,7 @@ function ElectionDetail() {
 
       if (typeof voteId === 'string') {
         await voteProvider.makeVote(voteId, voteActions, voteKey as string);
-        console.log('Votes successfully recorded');
+        navigate("/")
       }
     } catch (error) {
       console.error('Error when recording votes:', error);
@@ -123,9 +122,6 @@ function ElectionDetail() {
     <div className='bg-gray-100 min-h-screen pb-4'>
       <nav className='flex justify-between items-center bg-white-200 text-black h-16 transition duration-300 shadow-md hover:shadow-xl px-4 w-full'>
         <h1 className='text-xl font-bold'>FIFIDIANANA 2024</h1>
-        <div className='cursor-pointer' onClick={handleExit}>
-          <RiLogoutBoxRLine size={24} style={{ cursor: 'pointer' }} />
-        </div>
       </nav>
       <div className='flex flex-col items-center justify-center'>
         <h1 className='italic font-bold mt-4'>
