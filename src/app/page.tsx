@@ -1,19 +1,34 @@
 'use client';
 
 import { ChangeEvent, FormEvent, useState } from 'react';
+import { axiosBase } from './utils/axios-config';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
-  const [state, setState] = useState('');
+  const [key, setKey] = useState('');
+  const [isLoading, setLoading] = useState(false);
+  const { push } = useRouter();
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setState(e.target.value);
+    setKey(e.target.value);
   };
 
   const handlerSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if(state.length !== 3){
-        alert("Diso ny kaody nampidirinao.")
-    }
+    setLoading(true);
+    axiosBase
+      .get('/validate', {
+        params: {
+          key,
+        },
+      })
+      .then(() => {
+        setLoading(false);
+        push('/vote');
+      })
+      .catch(() => {
+        alert('Diso ny kaody nampidirinao');
+      });
   };
 
   return (
@@ -25,7 +40,7 @@ export default function Home() {
         <div className='rounded-md border border-blue-500 px-1 overflow-hidden'>
           <input onChange={handleChange} type='text' className='outline-none h-[2.5rem] mx-2' />
         </div>
-        <button type='submit' className='btn my-2  h-[2.5rem] px-[3rem] rounded-lg bg-blue-500'>
+        <button disabled={isLoading} type='submit' className='btn my-2  h-[2.5rem] px-[3rem] rounded-lg bg-blue-500'>
           Anomboka
         </button>
       </form>
