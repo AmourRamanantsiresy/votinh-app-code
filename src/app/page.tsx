@@ -1,7 +1,7 @@
 'use client';
 
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { axiosBase } from './utils/axios-config';
+import { axiosBase } from '../utils/axios-config';
 import { useRouter } from 'next/navigation';
 
 export default function Home() {
