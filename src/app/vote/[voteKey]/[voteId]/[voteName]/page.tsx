@@ -59,7 +59,6 @@ function ElectionDetail() {
 
   const handleRefresh = () => {
     handleRecordVotes();
-    alert('Misaotra anao nifidy !');
   };
 
   const handleRecordVotes = async () => {
@@ -81,10 +80,11 @@ function ElectionDetail() {
 
       if (typeof voteId === 'string') {
         await voteProvider.makeVote(voteId, voteActions, voteKey as string);
+        alert('Misaotra anao nifidy !');
         navigate("/")
       }
     } catch (error) {
-      console.error('Error when recording votes:', error);
+      alert('Efa niasa io kaody ampesainao io!');
     }
   };
 
